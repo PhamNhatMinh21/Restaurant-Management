@@ -53,8 +53,8 @@ CREATE TABLE tblMemberShipCard6 (
 
 CREATE TABLE tblBill6 (
 	id VARCHAR(255) PRIMARY KEY,
-	issuedAt DATE NOT NULL,
-	paidAt DATE,
+	issuedAt TIMESTAMP NOT NULL,
+	paidAt TIMESTAMP NULL DEFAULT NULL,
 	paymentType VARCHAR(255) NOT NULL,
 	tblCustomer6id VARCHAR(255),
 	tblSaleStaff6tblStaff6tblUser6id VARCHAR(255) NOT NULL,
@@ -70,7 +70,7 @@ CREATE TABLE tblTable6 (
 
 CREATE TABLE tblBooking6 (
 	id VARCHAR(255) PRIMARY KEY,
-	bookedAt DATE NOT NULL,
+	bookedAt TIMESTAMP NOT NULL,
 	customerCount INT NOT NULL,
 	contactName VARCHAR(255) NOT NULL,
 	contactPhone VARCHAR(255) NOT NULL,
@@ -80,8 +80,8 @@ CREATE TABLE tblBooking6 (
 
 CREATE TABLE tblBookedTable6 (
 	id VARCHAR(255) PRIMARY KEY,
-	startTime DATE NOT NULL,
-	endTime DATE NOT NULL,
+	startTime TIMESTAMP NOT NULL,
+	endTime TIMESTAMP NOT NULL,
 	note VARCHAR(255),
 	tblBooking6id VARCHAR(255) NOT NULL,
 	tblTable6id VARCHAR(255) NOT NULL,
@@ -91,8 +91,8 @@ CREATE TABLE tblBookedTable6 (
 
 CREATE TABLE tblOrder6 (
 	id VARCHAR(255) PRIMARY KEY,
-	orderedAt DATE NOT NULL,
-	confirmedAt DATE NOT NULL,
+	orderedAt TIMESTAMP NOT NULL,
+	confirmedAt TIMESTAMP NOT NULL,
 	tblBill6id VARCHAR(255),
 	tblBooking6id VARCHAR(255) NOT NULL,
 	FOREIGN KEY (tblBill6id) REFERENCES tblBill6(id),
