@@ -1,0 +1,15 @@
+target/
+*.class
+*.war
+*.jar
+*.log
+__pycache__/
+*.py[cod]
+.env
+.env.*
+!.env.example
+src/main/resources/database.properties
+.idea/
+.vscode/
+.DS_Store
+Thumbs.db
