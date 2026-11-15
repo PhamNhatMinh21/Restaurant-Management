@@ -1,0 +1,227 @@
+body {
+	margin: 0;
+	font-family: Arial, sans-serif;
+	background: #ffffff;
+	color: #000000;
+	min-height: 100vh;
+	display: flex;
+	flex-direction: column;
+}
+
+.header {
+	display: grid;
+	grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+	align-items: center;
+	column-gap: 16px;
+	background: #263447;
+	color: #ffffff;
+	padding: 15px 25px;
+	position: relative;
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.header h1 {
+	grid-column: 2;
+	grid-row: 1;
+	margin: 0;
+	font-size: 22px;
+	text-align: center;
+	font-weight: normal;
+}
+
+.header .user {
+	grid-column: 3;
+	grid-row: 1;
+	justify-self: end;
+	font-size: 15px;
+}
+
+@media (max-width: 640px) {
+	.header {
+		grid-template-columns: minmax(0, 1fr);
+		row-gap: 6px;
+	}
+
+	.header h1 {
+		grid-column: 1;
+	}
+
+	.header .user {
+		grid-column: 1;
+		grid-row: 2;
+		justify-self: center;
+	}
+}
+
+.content {
+	flex: 1;
+	display: flex;
+	flex-direction: column;
+	justify-content: flex-start;
+	align-items: center;
+	padding: 25px 20px 40px;
+	box-sizing: border-box;
+	width: 100%;
+}
+
+.content:has(.menu),
+.content:has(form[name="login"]) {
+	justify-content: center;
+}
+
+.content > form,
+.content > .info,
+.content > table.list,
+.content > .total,
+.content > .footer,
+.content > .message {
+	width: 100%;
+	max-width: 950px;
+	box-sizing: border-box;
+}
+
+.menu {
+	width: 420px;
+	max-width: 100%;
+	margin: 20px auto;
+}
+
+.btn, button, input[type=submit] {
+	display: block;
+	box-sizing: border-box;
+	background: #5b7f8c;
+	color: #ffffff;
+	border: 1px solid #263447;
+	padding: 7.75px 20px;
+	font-size: 16px;
+	text-align: center;
+	text-decoration: none;
+	cursor: pointer;
+}
+
+.menu .btn, .menu button {
+	margin-bottom: 20px;
+}
+
+.menu form {
+	margin: 0;
+}
+
+.menu button {
+	width: 100%;
+}
+
+.btn.inline, button.inline, input[type=submit].inline {
+	display: inline-block;
+}
+
+.btn.disabled, button:disabled {
+	background: #aaaaaa;
+	cursor: default;
+}
+
+label {
+	display: block;
+	margin: 10px 0 5px 0;
+}
+
+input[type=text], input[type=number], input[type=date], input[type=password], textarea {
+	box-sizing: border-box;
+	padding: 8px;
+	font-size: 15px;
+	border: 1px solid #000000;
+}
+
+input[readonly] {
+	background: #dddddd;
+}
+
+input.error {
+	border: 2px solid #cc0000;
+}
+
+table.list {
+	border-collapse: collapse;
+	width: 100%;
+	margin: 20px 0;
+}
+
+table.list th, table.list td {
+	border: 1px solid #000000;
+	padding: 8px;
+	text-align: left;
+}
+
+table.list td.id {
+	background: #dddddd;
+}
+
+table.list img {
+	width: 100px;
+}
+
+.info {
+	border: 1px solid #000000;
+	padding: 10px 15px;
+	line-height: 1.6;
+}
+
+.message {
+	margin: 10px 0;
+	padding: 10px 15px;
+	display: inline-block;
+}
+
+.message.success {
+	background: #e5f0e5;
+	border: 1px solid #99bb99;
+	color: #1d5c1d;
+}
+
+.message.error {
+	background: #fbe5e5;
+	border: 1px solid #cc9999;
+	color: #aa0000;
+}
+
+.total {
+	text-align: center;
+	margin: 10px 0 20px 0;
+}
+
+.total span {
+	display: inline-block;
+	background: #fff4cc;
+	border: 1px solid #c8a84a;
+	padding: 10px 20px;
+}
+
+.row {
+	overflow: hidden;
+}
+
+.col {
+	float: left;
+	margin-right: 20px;
+}
+
+.form-line {
+	overflow: hidden;
+}
+
+.form-line .col {
+	margin-right: 15px;
+}
+
+.footer {
+	margin-top: 20px;
+}
+
+.footer .btn, .footer button {
+	margin-right: 10px;
+}
+form[name="login"] {
+    transform: translateY(-50px);
+	transform: translateX(370px);
+}
