@@ -103,7 +103,7 @@ if (request.getMethod().equalsIgnoreCase("POST")) {
 <head>
 <meta charset="UTF-8">
 <title>Sửa thông tin món ăn</title>
-<link rel="stylesheet" href="../../css/style.css?v=20261115-header">
+<link rel="stylesheet" href="../../css/style.css?v=20261116-edit-layout">
 </head>
 <body>
 	<div class="header">
@@ -111,57 +111,93 @@ if (request.getMethod().equalsIgnoreCase("POST")) {
 		<h1>Sửa thông tin món ăn</h1>
 	</div>
 	<div class="content">
-		<form name="editDish" action="DishEditFrm6.jsp" method="post" enctype="multipart/form-data">
-			<div class="row">
-				<div class="col" style="width: 300px;">
-					<div>Mã món: <span id="out_dishID"><%=h(dish.getId())%></span></div>
+		<form name="editDish" class="dish-edit-form" action="DishEditFrm6.jsp" method="post" enctype="multipart/form-data">
+			<div class="dish-edit-grid">
+				<div class="dish-edit-left">
+					<label>Mã món</label>
+					<span id="out_dishID" class="readonly-input"><%=h(dish.getId())%></span>
 
 					<label>Ảnh hiện tại</label>
-					<%
-					if (dish.getImage() != null && dish.getImage().length() > 0) {
-					%><img src="<%=request.getContextPath()%>/<%=h(dish.getImage())%>" alt="<%=h(dish.getName())%>" style="width: 100%;">
-					<%
-					}
-					%>
-					<label for="inout_image">Chọn / thay ảnh</label>
-					<input type="file" id="inout_image" name="inout_image" accept="image/*">
+					<div class="dish-image-box">
+						<%
+						if (dish.getImage() != null && dish.getImage().length() > 0) {
+						%><img id="dishPreview" src="<%=request.getContextPath()%>/<%=h(dish.getImage())%>" alt="<%=h(dish.getName())%>">
+						<%
+						} else {
+						%><div id="dishPreviewEmpty" class="dish-image-empty">Chưa có ảnh</div>
+						<%
+						}
+						%>
+					</div>
+					<input type="file" id="inout_image" name="inout_image" accept="image/*" class="dish-file-input">
+					<label for="inout_image" class="btn dish-image-btn">Chọn / thay ảnh</label>
+					<div id="selectedImageName" class="dish-file-name"></div>
 				</div>
 
-				<div class="col" style="width: 600px;">
+				<div class="dish-edit-right">
 					<label for="inout_name">Tên món</label>
 					<input type="text" id="inout_name" name="inout_name" value="<%=h(dish.getName())%>"
-						<%=nameError ? "class=\"error\"" : ""%> style="width: 100%;">
+						<%=nameError ? "class=\"error\"" : ""%>>
 
 					<div class="form-line">
-						<div class="col" style="width: 290px;">
+						<div>
 							<label for="inout_price">Giá bán (VND)</label>
 							<input type="number" id="inout_price" name="inout_price" min="0.01" step="0.01" max="99999999999999999.99"
-								value="<%=dish.getPrice() == null ? "" : dish.getPrice().toPlainString()%>" style="width: 100%;">
+								value="<%=dish.getPrice() == null ? "" : dish.getPrice().toPlainString()%>">
 						</div>
-						<div class="col" style="width: 290px;">
+						<div>
 							<label for="inout_category">Nhóm món</label>
-							<input type="text" id="inout_category" name="inout_category" value="<%=h(dish.getCategory())%>" style="width: 100%;">
+							<input type="text" id="inout_category" name="inout_category" value="<%=h(dish.getCategory())%>">
 						</div>
 					</div>
 
 					<label for="inout_description">Mô tả</label>
-					<textarea id="inout_description" name="inout_description" rows="5" style="width: 100%;"><%=h(dish.getDescription())%></textarea>
-					<%
-						if (!message.equals("")) {
-						%><div id="out_message" class="message <%=success ? "success" : "error"%>"><%=success ? "✓ " : ""%><%=message%></div>
-						<%
-						}
-					%>
+					<textarea id="inout_description" name="inout_description" rows="4"><%=h(dish.getDescription())%></textarea>
 				</div>
 			</div>
 
+			<%
+			if (!message.equals("")) {
+			%><div id="out_message" class="message <%=success ? "success" : "error"%>"><%=success ? "✓ " : ""%><%=message%></div>
+			<%
+			}
+			%>
 
-			<div class="footer">
+			<div class="footer dish-edit-footer">
 				<a id="sub_back" class="btn inline"
 					href="DishSearchFrm6.jsp?searchName=<%=URLEncoder.encode(searchName, "UTF-8")%>">Quay lại</a>
 				<button type="submit" id="sub_saveDish" class="inline">Lưu</button>
 			</div>
 		</form>
 	</div>
+	<script>
+		(function() {
+			var input = document.getElementById("inout_image");
+			var preview = document.getElementById("dishPreview");
+			var empty = document.getElementById("dishPreviewEmpty");
+			var nameBox = document.getElementById("selectedImageName");
+			if (!input) return;
+			input.addEventListener("change", function() {
+				if (input.files && input.files[0]) {
+					var file = input.files[0];
+					if (nameBox) {
+						nameBox.textContent = "Đã chọn: " + file.name;
+						nameBox.classList.add("visible");
+					}
+					if (preview) {
+						preview.src = URL.createObjectURL(file);
+					} else if (empty && empty.parentNode) {
+						var img = document.createElement("img");
+						img.id = "dishPreview";
+						img.alt = "Ảnh xem trước";
+						img.src = URL.createObjectURL(file);
+						empty.parentNode.replaceChild(img, empty);
+						preview = img;
+						empty = null;
+					}
+				}
+			});
+		})();
+	</script>
 </body>
 </html>
